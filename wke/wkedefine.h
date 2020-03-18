@@ -717,6 +717,13 @@ public:
     virtual bool canGoForward() const = 0;
     virtual bool goForward() = 0;
 
+    virtual bool hasSelection() const = 0;
+    virtual const wchar_t* selectedTextW() = 0;
+    virtual const utf8* selectedText() = 0;
+    virtual const wchar_t* selectedSourceW() = 0;
+    virtual const utf8* selectedSource() = 0;
+
+
     virtual void editorSelectAll() = 0;
     virtual void editorUnSelect() = 0;
     virtual void editorCopy() = 0;
@@ -744,8 +751,8 @@ public:
 
     virtual wkeRect getCaret() = 0;
 
-    virtual jsValue runJS(const utf8* script) = 0;
-    virtual jsValue runJS(const wchar_t* script) = 0;
+    virtual jsValue runJS(const utf8* script, bool isInClosure = true) = 0;
+    virtual jsValue runJS(const wchar_t* script, bool isInClosure = true) = 0;
     virtual jsExecState globalExec() = 0;
 
     virtual void sleep() = 0; //moveOffscreen
@@ -881,6 +888,12 @@ public:
     ITERATOR1(int, wkeHeight, wkeWebView webView, "") \
     ITERATOR1(int, wkeContentsWidth, wkeWebView webView, "") \
     ITERATOR1(int, wkeContentsHeight, wkeWebView webView, "") \
+    \
+    ITERATOR1(bool, wkeHasSelection, wkeWebView webView, "") \
+    ITERATOR1(const wchar_t*, wkeGetSelectedTextW, wkeWebView webView, "") \
+    ITERATOR1(const utf8*, wkeGetSelectedText, wkeWebView webView, "") \
+    ITERATOR1(const wchar_t*, wkeGetSelectedSourceW, wkeWebView webView, "") \
+    ITERATOR1(const utf8*, wkeGetSelectedSource, wkeWebView webView, "") \
     \
     ITERATOR1(void, wkeSelectAll, wkeWebView webView, "") \
     ITERATOR1(void, wkeCopy, wkeWebView webView, "") \
@@ -1059,8 +1072,8 @@ public:
     \
     ITERATOR1(wkeRect, wkeGetCaretRect, wkeWebView webView, "") \
     \
-    ITERATOR2(jsValue, wkeRunJS, wkeWebView webView, const utf8* script, "") \
-    ITERATOR2(jsValue, wkeRunJSW, wkeWebView webView, const wchar_t* script, "") \
+    ITERATOR3(jsValue, wkeRunJS, wkeWebView webView, const utf8* script, bool isInClosure, "") \
+    ITERATOR3(jsValue, wkeRunJSW, wkeWebView webView, const wchar_t* script, bool isInClosure, "") \
     \
     ITERATOR1(jsExecState, wkeGlobalExec, wkeWebView webView, "") \
     ITERATOR2(jsExecState, wkeGetGlobalExecByFrame, wkeWebView webView, wkeWebFrameHandle frameId, "") \

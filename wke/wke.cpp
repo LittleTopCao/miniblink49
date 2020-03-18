@@ -963,16 +963,16 @@ wkeRect wkeGetCaretRect(wkeWebView webView)
     return webView->caretRect();
 }
 
-jsValue wkeRunJS(wkeWebView webView, const utf8* script)
+jsValue wkeRunJS(wkeWebView webView, const utf8* script, bool isInClosure)
 {
     wke::checkThreadCallIsValid(__FUNCTION__);
-    return webView->runJS(script);
+    return webView->runJS(script, isInClosure);
 }
 
-jsValue wkeRunJSW(wkeWebView webView, const wchar_t* script)
+jsValue wkeRunJSW(wkeWebView webView, const wchar_t* script, bool isInClosure)
 {
     wke::checkThreadCallIsValid(__FUNCTION__);
-    return webView->runJS(script);
+    return webView->runJS(script, isInClosure);
 }
 
 jsExecState wkeGlobalExec(wkeWebView webView)
@@ -1974,6 +1974,37 @@ int wkeContentsHeight(wkeWebView webView)
 {
     return wkeGetContentHeight(webView);
 }
+
+bool wkeHasSelection(wkeWebView webView)
+{
+    wke::checkThreadCallIsValid(__FUNCTION__);
+    return webView->hasSelection();
+}
+
+const utf8* wkeGetSelectedText(wkeWebView webView)
+{
+    wke::checkThreadCallIsValid(__FUNCTION__);
+    return webView->selectedText();
+}
+
+const wchar_t* wkeGetSelectedTextW(wkeWebView webView)
+{
+    wke::checkThreadCallIsValid(__FUNCTION__);
+    return webView->selectedTextW();
+}
+
+const utf8* wkeGetSelectedSource(wkeWebView webView)
+{
+    wke::checkThreadCallIsValid(__FUNCTION__);
+    return webView->selectedSource();
+}
+
+const wchar_t* wkeGetSelectedSourceW(wkeWebView webView)
+{
+    wke::checkThreadCallIsValid(__FUNCTION__);
+    return webView->selectedSourceW();
+}
+
 
 void wkeSelectAll(wkeWebView webView)
 {

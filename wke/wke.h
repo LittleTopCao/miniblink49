@@ -322,6 +322,12 @@ WKE_API bool wkeGoBack(wkeWebView webView);
 WKE_API bool wkeCanGoForward(wkeWebView webView);
 WKE_API bool wkeGoForward(wkeWebView webView);
 
+WKE_API bool wkeHasSelection(wkeWebView webView);
+WKE_API const wchar_t* wkeGetSelectedTextW(wkeWebView webView);
+WKE_API const utf8* wkeGetSelectedText(wkeWebView webView);
+WKE_API const wchar_t* wkeGetSelectedSourceW(wkeWebView webView);
+WKE_API const utf8* wkeGetSelectedSource(wkeWebView webView);
+
 WKE_API void wkeEditorSelectAll(wkeWebView webView);
 WKE_API void wkeEditorUnSelect(wkeWebView webView);
 WKE_API void wkeEditorCopy(wkeWebView webView);
@@ -384,8 +390,8 @@ WKE_API void wkeKillFocus(wkeWebView webView);
 
 WKE_API wkeRect wkeGetCaretRect(wkeWebView webView);
 
-WKE_API jsValue wkeRunJS(wkeWebView webView, const utf8* script);
-WKE_API jsValue wkeRunJSW(wkeWebView webView, const wchar_t* script);
+WKE_API jsValue wkeRunJS(wkeWebView webView, const utf8* script, bool isInClosure = true);
+WKE_API jsValue wkeRunJSW(wkeWebView webView, const wchar_t* script, bool isInClosure = true);
 
 WKE_API jsExecState wkeGlobalExec(wkeWebView webView);
 
@@ -878,6 +884,12 @@ public:
     virtual bool canGoForward() const = 0;
     virtual bool goForward() = 0;
 
+    virtual bool hasSelection() const = 0;
+    virtual const wchar_t* selectedTextW() = 0;
+    virtual const utf8* selectedText() = 0;
+    virtual const wchar_t* selectedSourceW() = 0;
+    virtual const utf8* selectedSource() = 0;
+
     virtual void editorSelectAll() = 0;
     virtual void editorUnSelect() = 0;
     virtual void editorCopy() = 0;
@@ -905,8 +917,8 @@ public:
 
     virtual wkeRect getCaret() = 0;
 
-    virtual jsValue runJS(const utf8* script) = 0;
-    virtual jsValue runJS(const wchar_t* script) = 0;
+    virtual jsValue runJS(const utf8* script, bool isInClosure = true) = 0;
+    virtual jsValue runJS(const wchar_t* script, bool isInClosure = true) = 0;
     virtual jsExecState globalExec() = 0;
 
     virtual void sleep() = 0; //moveOffscreen
